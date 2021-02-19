@@ -22,7 +22,10 @@ struct Ensemble {
     std::vector<std::string> state_output_names;  // names of outputs that feed the next inputs
     int device_id;
     int batch_dim_index_in_state;
+        int batch_dim_index_in_input;
     int seq_len_dim_index_in_state;
+    std::string input_to_use_for_seq_len;
+    int seq_len_dim_index_in_input;
   };
 
   int max_seq_len;
@@ -43,9 +46,9 @@ struct RequestExecutionFrame {
     std::unordered_map<std::string, Ort::MemoryAllocation> state_buffer_2_map;  // pre-allocated on cuda
   };
 
-  int64_t req_id;  // request to be executed
-  int stage_id;    // stage to be executed; stage_id can be used as an index into model_run_state_vec
-  int batch_size;
+  const int64_t req_id;  // request to be executed
+  int stage_id;          // stage to be executed; stage_id can be used as an index into model_run_state_vec
+  const int batch_size;
   std::vector<RunState> model_run_state_vec;
 };
 
